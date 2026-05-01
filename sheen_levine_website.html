@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sheen S. Levine — Behavioral Strategist & Professor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111318;
+    --bg: #f8f8f6;
+    --surface: #f0f0ed;
+    --accent: #1c2b4a;
+    --mid: #4a5568;
+    --rule: #dcdbd7;
+    --highlight: #3d6b8e;
+    --warm: #8a8278;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 3.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(248,248,246,0.93);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  nav .logo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+
+  nav ul a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+
+  nav ul a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    padding-top: 64px;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    padding: 8rem 5rem 6rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 15%; bottom: 15%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--rule), transparent);
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.67rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--highlight);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s ease forwards;
+  }
+
+  .hero-name {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(3rem, 4.8vw, 5.2rem);
+    font-weight: 700;
+    line-height: 1.0;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.35s ease forwards;
+  }
+
+  .hero-name span {
+    display: block;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--mid);
+    font-size: 0.6em;
+    margin-top: 0.3em;
+  }
+
+  .hero-tagline {
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--warm);
+    line-height: 1.55;
+    margin: 2rem 0;
+    border-left: 2px solid var(--highlight);
+    padding-left: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s ease forwards;
+  }
+
+  .affiliations {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.65s ease forwards;
+  }
+
+  .affil-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    color: var(--warm);
+  }
+
+  .affil-item strong { color: var(--ink); font-weight: 400; }
+
+  .cta-group {
+    display: flex;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s ease forwards;
+  }
+
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.85rem 1.8rem;
+    transition: all 0.3s;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+  }
+
+  .btn-primary { background: var(--accent); color: var(--bg); }
+  .btn-primary:hover { background: var(--ink); }
+  .btn-outline { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .btn-outline:hover { background: var(--accent); color: var(--bg); }
+
+  .hero-right {
+    position: relative;
+    background: var(--accent);
+    overflow: hidden;
+  }
+
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 25% 75%, rgba(61,107,142,0.28) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 15%, rgba(255,255,255,0.04) 0%, transparent 50%);
+  }
+
+  .hero-right::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 42px 42px;
+    pointer-events: none;
+  }
+
+  .hero-initials {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Libre Baskerville', serif;
+    font-size: 20vw;
+    font-weight: 700;
+    color: rgba(255,255,255,0.025);
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+  }
+
+  .hero-quote {
+    position: absolute;
+    top: 2.5rem;
+    right: 2.5rem;
+    max-width: 210px;
+    opacity: 0;
+    animation: fadeIn 1s 1.1s ease forwards;
+  }
+
+  .hero-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: rgba(248,248,246,0.5);
+    line-height: 1.65;
+    text-align: right;
+  }
+
+  .hero-quote cite {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
+    color: var(--highlight);
+    display: block;
+    margin-top: 0.5rem;
+    text-align: right;
+  }
+
+  .hero-lines {
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    right: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 1s ease forwards;
+  }
+
+  .hero-lines-inner {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .hero-line-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: rgba(248,248,246,0.3);
+    text-transform: uppercase;
+  }
+
+  .hero-line-item strong {
+    color: rgba(248,248,246,0.65);
+    font-weight: 400;
+  }
+
+  /* SECTIONS */
+  section { padding: 7rem 0; }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 3.5rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.63rem;
+    letter-spacing: 0.15em;
+    color: var(--highlight);
+  }
+
+  .section-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 2.1rem;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+    margin-left: 1rem;
+  }
+
+  /* ABOUT */
+  #about { background: var(--surface); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: #2e2e35;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-text p:first-child::first-letter {
+    font-size: 3.5rem;
+    font-family: 'Libre Baskerville', serif;
+    font-weight: 700;
+    float: left;
+    line-height: 0.82;
+    margin-right: 0.1em;
+    margin-top: 0.12em;
+    color: var(--accent);
+  }
+
+  .media-list { margin-top: 2rem; }
+
+  .media-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.63rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 0.8rem;
+  }
+
+  .media-logos { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+
+  .media-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.07em;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--rule);
+    color: var(--warm);
+    white-space: nowrap;
+    background: var(--bg);
+  }
+
+  .about-sidebar { padding-top: 0.5rem; }
+
+  .sidebar-block {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .sidebar-block:last-child { border-bottom: none; }
+
+  .sidebar-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.63rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--highlight);
+    margin-bottom: 0.8rem;
+  }
+
+  .sidebar-content {
+    font-size: 1rem;
+    color: #2e2e35;
+    line-height: 1.65;
+  }
+
+  .tag-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.65rem;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    color: var(--mid);
+  }
+
+  /* PULLQUOTE */
+  .pullquote {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 3rem 0;
+    margin: 4rem 0;
+    text-align: center;
+  }
+
+  .pullquote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem;
+    font-style: italic;
+    color: var(--accent);
+    max-width: 680px;
+    margin: 0 auto 1rem;
+    line-height: 1.5;
+  }
+
+  .pullquote cite {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm);
+  }
+
+  /* RESEARCH */
+  #research { background: var(--bg); }
+
+  .papers-grid { display: grid; gap: 0; }
+
+  .paper-item {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.2s, padding 0.2s, margin 0.2s;
+  }
+
+  .paper-item:hover {
+    background: rgba(28,43,74,0.03);
+    margin: 0 -2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .paper-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--warm);
+    padding-top: 0.2rem;
+  }
+
+  .paper-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--accent);
+    line-height: 1.4;
+    margin-bottom: 0.35rem;
+  }
+
+  .paper-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    color: var(--warm);
+    line-height: 1.75;
+  }
+
+  .paper-citations {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--rule);
+    text-align: right;
+    padding-top: 0.1rem;
+    min-width: 60px;
+  }
+
+  .paper-citations span {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rule);
+    font-weight: 400;
+  }
+
+  /* IMPACT */
+  #impact { background: var(--accent); }
+
+  #impact .section-title { color: var(--bg); }
+  #impact .section-num { color: var(--highlight); }
+  #impact .section-rule { background: rgba(255,255,255,0.1); }
+
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+
+  .impact-card {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 2rem;
+  }
+
+  .impact-marker {
+    width: 28px;
+    height: 2px;
+    background: var(--highlight);
+    margin-bottom: 1.3rem;
+  }
+
+  .impact-headline {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.2rem;
+    color: var(--bg);
+    margin-bottom: 0.8rem;
+    line-height: 1.35;
+  }
+
+  .impact-text {
+    font-size: 0.95rem;
+    color: rgba(248,248,246,0.52);
+    line-height: 1.75;
+  }
+
+  /* EXPERIENCE */
+  #experience { background: var(--surface); }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6rem; bottom: 0.6rem;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--highlight), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 2.5rem;
+    padding-left: 2rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -0.38rem; top: 0.55rem;
+    width: 7px; height: 7px;
+    background: var(--highlight);
+    border-radius: 50%;
+  }
+
+  .timeline-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.63rem;
+    letter-spacing: 0.12em;
+    color: var(--highlight);
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-role {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-bottom: 0.15rem;
+  }
+
+  .timeline-org {
+    font-size: 0.95rem;
+    color: var(--warm);
+    font-style: italic;
+  }
+
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 4rem;
+  }
+
+  /* TEACHING */
+  #teaching { background: var(--bg); }
+
+  .teaching-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .student-voices {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .voice-card {
+    background: var(--surface);
+    padding: 1.8rem 2rem;
+    border-left: 2px solid var(--highlight);
+  }
+
+  .voice-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #2e2e35;
+    line-height: 1.7;
+    margin-bottom: 0.8rem;
+  }
+
+  .voice-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm);
+  }
+
+  .teaching-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .teaching-block {
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .teaching-block:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .t-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    padding: 0.22rem 0.6rem;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    display: inline-block;
+    margin: 0.2rem 0.2rem 0.2rem 0;
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    overflow: hidden;
+    background: var(--accent);
+    padding: 0.8rem 0;
+  }
+
+  .marquee-track {
+    display: flex;
+    animation: marquee 32s linear infinite;
+    white-space: nowrap;
+  }
+
+  .marquee-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(248,248,246,0.3);
+    padding: 0 3rem;
+    flex-shrink: 0;
+  }
+
+  .marquee-dot { color: rgba(248,248,246,0.12); padding: 0 0.5rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    padding: 6rem 0 3rem;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 3.5rem;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .footer-brand {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.8rem;
+    color: var(--bg);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .footer-brand em {
+    font-weight: 300;
+    color: var(--highlight);
+    font-size: 0.6em;
+    display: block;
+    font-style: normal;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.95rem;
+    color: rgba(248,248,246,0.3);
+    font-style: italic;
+    line-height: 1.65;
+  }
+
+  .footer-col-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--highlight);
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+
+  .footer-links a {
+    font-size: 0.95rem;
+    color: rgba(248,248,246,0.38);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--bg); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.07em;
+    color: rgba(248,248,246,0.18);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-right { min-height: 360px; }
+    .hero-left { padding: 6rem 2rem 4rem; }
+    .about-grid, .impact-grid, .timeline-grid, .teaching-grid, .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    nav { padding: 1rem 1.5rem; }
+    .container { padding: 0 1.5rem; }
+    nav ul { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">SSL</a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#experience">Career</a></li>
+    <li><a href="#teaching">Teaching</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">Behavioral Strategist &amp; Professor</div>
+    <h1 class="hero-name">
+      Sheen S.<br>Levine
+      <span>Why people behave as they do.</span>
+    </h1>
+    <p class="hero-tagline">
+      Studying how individuals shape organizations, markets, and each other — from price bubbles to innovation, from cognitive bias to radical diversity.
+    </p>
+    <div class="affiliations">
+      <div class="affil-item"><strong>University of Texas at Dallas</strong> — Naveen Jindal School of Management</div>
+      <div class="affil-item"><strong>DTU Management</strong> — Otto Moensted Professor of Strategy &amp; Innovation</div>
+      <div class="affil-item"><strong>Columbia University</strong> — Institute for Social &amp; Economic Research &amp; Policy</div>
+      <div class="affil-item"><strong>Wharton School</strong> — PhD, University of Pennsylvania</div>
+    </div>
+    <div class="cta-group">
+      <a href="#research" class="btn btn-primary">View Research</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-initials">SSL</div>
+    <div class="hero-quote">
+      <p>"In 2015, New York City restructured how it selects managers for its $160 billion pension funds, citing research by Dr. Levine."</p>
+      <cite>New York City Pension Fund</cite>
+    </div>
+    <div class="hero-lines">
+      <div class="hero-lines-inner">
+        <div class="hero-line-item">Published in <strong>PNAS · Organization Science · SMJ · Science Advances</strong></div>
+        <div class="hero-line-item">Covered by <strong>NYT · WSJ · The Economist · Bloomberg · NPR</strong></div>
+        <div class="hero-line-item">Cited across <strong>Business · Economics · Sociology · Law · CS</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-text">The New York Times <span class="marquee-dot">·</span> Wall Street Journal <span class="marquee-dot">·</span> The Economist <span class="marquee-dot">·</span> Financial Times <span class="marquee-dot">·</span> Bloomberg <span class="marquee-dot">·</span> Forbes <span class="marquee-dot">·</span> NPR <span class="marquee-dot">·</span> Reuters <span class="marquee-dot">·</span> BusinessWeek <span class="marquee-dot">·</span> South China Morning Post <span class="marquee-dot">·</span> Australian Financial Review <span class="marquee-dot">·</span> The Straits Times <span class="marquee-dot">·</span> Science Advances <span class="marquee-dot">·</span> PNAS <span class="marquee-dot">·</span> Organization Science <span class="marquee-dot">·</span></span>
+    <span class="marquee-text">The New York Times <span class="marquee-dot">·</span> Wall Street Journal <span class="marquee-dot">·</span> The Economist <span class="marquee-dot">·</span> Financial Times <span class="marquee-dot">·</span> Bloomberg <span class="marquee-dot">·</span> Forbes <span class="marquee-dot">·</span> NPR <span class="marquee-dot">·</span> Reuters <span class="marquee-dot">·</span> BusinessWeek <span class="marquee-dot">·</span> South China Morning Post <span class="marquee-dot">·</span> Australian Financial Review <span class="marquee-dot">·</span> The Straits Times <span class="marquee-dot">·</span> Science Advances <span class="marquee-dot">·</span> PNAS <span class="marquee-dot">·</span> Organization Science <span class="marquee-dot">·</span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>Dr. Sheen S. Levine investigates how people behave and how their behavior ripples through organizations and markets. His work bridges economics, sociology, psychology, and cognitive science — never content to stay within a single discipline when the most important questions live at their intersections.</p>
+        <p>His current research asks why diversity systematically improves error detection, when decision-makers choose the familiar over the genuinely promising, and how acts of generosity propagate through networks of strangers. The answers carry real consequences: executives at BlackRock and the City of New York have changed how they manage in direct response to his findings.</p>
+        <p>He has led research teams to publications in <em>Proceedings of the National Academy of Sciences</em>, <em>Organization Science</em>, and the <em>Strategic Management Journal</em>. His work has attracted attention from scholars across six disciplines, and from the public via two decades of media coverage spanning five continents.</p>
+
+        <div class="pullquote">
+          <p>"Ethnic diversity deflates price bubbles."</p>
+          <cite>PNAS, 2014</cite>
+        </div>
+
+        <div class="media-list">
+          <div class="media-label">Research covered by</div>
+          <div class="media-logos">
+            <span class="media-tag">NY Times</span>
+            <span class="media-tag">Wall Street Journal</span>
+            <span class="media-tag">The Economist</span>
+            <span class="media-tag">Financial Times</span>
+            <span class="media-tag">Bloomberg</span>
+            <span class="media-tag">Forbes</span>
+            <span class="media-tag">NPR</span>
+            <span class="media-tag">Reuters</span>
+            <span class="media-tag">BusinessWeek</span>
+            <span class="media-tag">Science Advances</span>
+            <span class="media-tag">NY Magazine</span>
+            <span class="media-tag">Boston Globe</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-sidebar reveal">
+        <div class="sidebar-block">
+          <div class="sidebar-label">Research Areas</div>
+          <div class="tag-list">
+            <span class="tag">Behavioral Strategy</span>
+            <span class="tag">Cooperation</span>
+            <span class="tag">Diversity &amp; Error Detection</span>
+            <span class="tag">Knowledge Transfer</span>
+            <span class="tag">Open Collaboration</span>
+            <span class="tag">Strategic Intelligence</span>
+            <span class="tag">Networks</span>
+            <span class="tag">Market Dynamics</span>
+            <span class="tag">AI &amp; Networks</span>
+          </div>
+        </div>
+        <div class="sidebar-block">
+          <div class="sidebar-label">Professional Memberships</div>
+          <div class="sidebar-content">
+            Academy of Management<br>
+            Strategic Management Society<br>
+            American Sociological Association<br>
+            Society for Personality &amp; Social Psychology<br>
+            American Economic Association<br>
+            Economic Science Association
+          </div>
+        </div>
+        <div class="sidebar-block">
+          <div class="sidebar-label">Editorial Roles</div>
+          <div class="sidebar-content">
+            Co-Editor, Special Issue on Experiments<br><em>Organization Science</em> (2018–2024)<br><br>
+            Deputy Editor-in-Chief<br><em>Management and Organization Review</em><br><br>
+            Op-Ed Contributor<br><em>The New York Times</em>
+          </div>
+        </div>
+        <div class="sidebar-block">
+          <div class="sidebar-label">Education</div>
+          <div class="sidebar-content">
+            PhD — The Wharton School<br>
+            University of Pennsylvania
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Selected Publications</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="papers-grid">
+
+      <div class="paper-item reveal">
+        <div class="paper-year">2008</div>
+        <div>
+          <div class="paper-title">The effects of conflict types, dimensions, and emergent states on group outcomes</div>
+          <div class="paper-meta">K.A. Jehn, L. Greer, S. Levine, G. Szulanski<br>Group Decision and Negotiation 17(6), 465–495</div>
+        </div>
+        <div class="paper-citations">729<span>citations</span></div>
+      </div>
+
+      <div class="paper-item reveal">
+        <div class="paper-year">2014</div>
+        <div>
+          <div class="paper-title">Open collaboration for innovation: Principles and performance</div>
+          <div class="paper-meta">S.S. Levine, M.J. Prietula<br>Organization Science 25(5), 1414–1433</div>
+        </div>
+        <div class="paper-citations">447<span>citations</span></div>
+      </div>
+
+      <div class="paper-item reveal">
+        <div class="paper-year">2014</div>
+        <div>
+          <div class="paper-title">Ethnic diversity deflates price bubbles</div>
+          <div class="paper-meta">S.S. Levine, E.P. Apfelbaum, M. Bernard, V.L. Bartelt, E.J. Zajac, D. Stark<br>Proceedings of the National Academy of Sciences 111(52), 18524–18529</div>
+        </div>
+        <div class="paper-citations">338<span>citations</span></div>
+      </div>
+
+      <div class="paper-item reveal">
+        <div class="paper-year">2012</div>
+        <div>
+          <div class="paper-title">How knowledge transfer impacts performance: A multilevel model of benefits and liabilities</div>
+          <div class="paper-meta">S.S. Levine, M.J. Prietula<br>Organization Science 23(6), 1748–1766</div>
+        </div>
+        <div class="paper-citations">256<span>citations</span></div>
+      </div>
+
+      <div class="paper-item reveal">
+        <div class="paper-year">2017</div>
+        <div>
+          <div class="paper-title">Strategic intelligence: The cognitive capability to anticipate competitor behavior</div>
+          <div class="paper-meta">S.S. Levine, M. Bernard, R. Nagel<br>Strategic Management Journal 38(12), 2390–2423</div>
+        </div>
+        <div class="paper-citations">238<span>citations</span></div>
+      </div>
+
+      <div class="paper-item reveal">
+        <div class="paper-year">2021</div>
+        <div>
+          <div class="paper-title">Racial attention deficit</div>
+          <div class="paper-meta">S.S. Levine, C. Reypens, D. Stark<br>Science Advances 7(38), eabg9508</div>
+        </div>
+        <div class="paper-citations">30<span>citations</span></div>
+      </div>
+
+      <div class="paper-item reveal">
+        <div class="paper-year">2023</div>
+        <div>
+          <div class="paper-title">The other invisible hand: How markets — as institutions — propagate conformity and valuation errors</div>
+          <div class="paper-meta">S.S. Levine, E.J. Zajac<br>Strategy Science 8(3), 323–348</div>
+        </div>
+        <div class="paper-citations">62<span>citations</span></div>
+      </div>
+
+      <div class="paper-item reveal">
+        <div class="paper-year">2023</div>
+        <div>
+          <div class="paper-title">How network effects make AI smarter</div>
+          <div class="paper-meta">S.S. Levine, D. Jain<br>Available at SSRN 5281829</div>
+        </div>
+        <div class="paper-citations">10<span>citations</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section id="impact">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Real-World Impact</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="impact-grid">
+      <div class="impact-card reveal">
+        <div class="impact-marker"></div>
+        <div class="impact-headline">New York City Pension Fund Reform</div>
+        <div class="impact-text">In 2015, New York City restructured the selection of managers for its $160 billion pension funds, explicitly citing Levine's research on diversity and decision-making as the basis for change.</div>
+      </div>
+      <div class="impact-card reveal">
+        <div class="impact-marker"></div>
+        <div class="impact-headline">Cross-Disciplinary Reach</div>
+        <div class="impact-text">Findings have been cited by scholars across six fields — business, economics, psychology, sociology, law, and computer science — reflecting research that transcends any single academic tradition.</div>
+      </div>
+      <div class="impact-card reveal">
+        <div class="impact-marker"></div>
+        <div class="impact-headline">Industry Collaboration</div>
+        <div class="impact-text">Research conducted in partnership with Bain &amp; Company, BlackRock, Deloitte, and KPMG. Top executives said the work changed how they manage their organizations and assess risk.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Career</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="timeline-grid">
+      <div class="timeline reveal">
+        <div class="timeline-item">
+          <div class="timeline-period">Jul 2024 — Present</div>
+          <div class="timeline-role">Otto Moensted Professor of Strategy &amp; Innovation</div>
+          <div class="timeline-org">DTU Management, Copenhagen</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-period">Jun 2014 — Present</div>
+          <div class="timeline-role">Full Professor</div>
+          <div class="timeline-org">Naveen Jindal School of Management, UT Dallas</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-period">Jul 2010 — Present</div>
+          <div class="timeline-role">Research Affiliate</div>
+          <div class="timeline-org">Institute for Social &amp; Economic Research &amp; Policy, Columbia University</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-period">Jan 2006 — Sep 2023</div>
+          <div class="timeline-role">Senior Researcher</div>
+          <div class="timeline-org">University of Pennsylvania</div>
+        </div>
+      </div>
+      <div class="timeline reveal">
+        <div class="timeline-item">
+          <div class="timeline-period">Jul 2010 — Jul 2011</div>
+          <div class="timeline-role">Behavioral &amp; Policy Sciences Fellow</div>
+          <div class="timeline-org">MIT Sloan School of Management</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-period">Sep 2004 — Jun 2010</div>
+          <div class="timeline-role">Professor</div>
+          <div class="timeline-org">Singapore Management University</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-period">Nov 2003 — Aug 2004</div>
+          <div class="timeline-role">Visiting Scholar</div>
+          <div class="timeline-org">Copenhagen Business School</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-period">Jan 1999 — Dec 2005</div>
+          <div class="timeline-role">Lecturer &amp; Doctoral Candidate</div>
+          <div class="timeline-org">The Wharton School, University of Pennsylvania</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHING -->
+<section id="teaching">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Teaching</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="teaching-grid">
+      <div class="student-voices reveal">
+        <div class="voice-card">
+          <div class="voice-text">"This guy is a great teacher — very no BS. He challenges you during class. No traditional exams; essays and class discussions, a few very hard quizzes. I do recommend if you want to actually learn."</div>
+          <div class="voice-meta">IMS3310 — UT Dallas</div>
+        </div>
+        <div class="voice-card">
+          <div class="voice-text">"Super fun class, you learn so much from him. He facilitates class discussions you participate in. Amazing lectures, and he gives genuinely good feedback."</div>
+          <div class="voice-meta">IMS3310 — UT Dallas</div>
+        </div>
+        <div class="voice-card">
+          <div class="voice-text">"Structured his lectures in a way that prepares you for the workplace. Participation and contributions are worth more than the exams. Do the readings, show up, and you'll be fine."</div>
+          <div class="voice-meta">BA1310 — UT Dallas</div>
+        </div>
+      </div>
+
+      <div class="teaching-sidebar reveal">
+        <div class="teaching-block">
+          <div class="sidebar-label">Subjects Taught</div>
+          <div style="margin-top:0.5rem;">
+            <span class="t-tag">Global Strategic Management</span>
+            <span class="t-tag">Organizational Theory</span>
+            <span class="t-tag">Entrepreneurship</span>
+            <span class="t-tag">Innovation</span>
+            <span class="t-tag">International Business</span>
+          </div>
+        </div>
+        <div class="teaching-block">
+          <div class="sidebar-label">Institutions</div>
+          <div class="sidebar-content">
+            UT Dallas · DTU Copenhagen<br>Singapore Management University<br>Wharton · MIT Sloan
+          </div>
+        </div>
+        <div class="teaching-block">
+          <div class="sidebar-label">Reach</div>
+          <div class="sidebar-content">Students and executives across the US, Europe, and Asia — for over two decades.</div>
+        </div>
+        <div class="teaching-block">
+          <div class="sidebar-label">Approach</div>
+          <div class="sidebar-content">Discussion-driven. Evidence-based. No shortcuts. Classes demand active engagement with ideas — and reward students who bring their full attention.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <em>Contact</em>
+          Sheen S. Levine
+        </div>
+        <p class="footer-tagline">I study (and teach) how people behave and how they impact others, organizations and markets.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Links</div>
+        <ul class="footer-links">
+          <li><a href="https://scholar.google.com/citations?user=RqUUQvsAAAAJ" target="_blank">Google Scholar</a></li>
+          <li><a href="https://www.innovationgrowthlab.org/about/research-network/people/sheen-s-levine" target="_blank">Innovation Growth Lab</a></li>
+          <li><a href="https://www.strategicmanagement.net/person/sheen-levine/" target="_blank">Strategic Management Society</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Institutions</div>
+        <ul class="footer-links">
+          <li><a href="#">UT Dallas — Jindal School</a></li>
+          <li><a href="#">DTU Management, Copenhagen</a></li>
+          <li><a href="#">Columbia University — ISERP</a></li>
+          <li><a href="#">Innovation Growth Lab</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Sheen S. Levine. All rights reserved.</span>
+      <span class="footer-copy">UT Dallas · DTU Copenhagen · Columbia University</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = Array.from(entry.target.parentElement.children).indexOf(entry.target);
+        entry.target.style.transitionDelay = `${idx * 0.07}s`;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  const sections = document.querySelectorAll('section[id], footer[id]');
+  const navLinks = document.querySelectorAll('nav ul a');
+
+  new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => {
+          a.style.color = '';
+          if (a.getAttribute('href') === '#' + entry.target.id) a.style.color = 'var(--accent)';
+        });
+      }
+    });
+  }, { threshold: 0.3 }).observe(document.querySelector('#about'));
+
+  sections.forEach(s => {
+    new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => {
+            a.style.color = '';
+            if (a.getAttribute('href') === '#' + entry.target.id) a.style.color = 'var(--accent)';
+          });
+        }
+      });
+    }, { threshold: 0.3 }).observe(s);
+  });
+</script>
+</body>
+</html>
